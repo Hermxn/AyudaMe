@@ -1,0 +1,7 @@
+*.pyc
+*.pre-commit-config.yaml
+*setup.cfg
+*.sqlite3
+
+/__pycache__/
+.idea/
