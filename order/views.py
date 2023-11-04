@@ -37,5 +37,5 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Order
-    template_name = "orders/detail.html"
+    template_name = "order/detail.html"
     context_object_name = "order"

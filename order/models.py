@@ -33,4 +33,4 @@ class Order(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.pk=}, {self.date=}, {self.title=}, {self.description=}, {self.client}, {self.executor}"
+        return f"{self.pk}, {self.date}, {self.title}, {self.description}, {self.client}, {self.executor}"

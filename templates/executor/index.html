@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link href="{% static 'executors/index.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+{% if executors %}
+    {% for executor in executors %}
+    <div class="executor">
+        <div class="executor_contacts">
+            <h3><a href="{% url 'executors:detail' executor.id %}"> {{ executor.name }} </a></h3>
+            <p class="executor_contacts"> Ownership: {{ executor.ownership }} </p>
+            <p class="executor_contacts"> Area: {{ executor.area }} </p>
+            <p class="executor_contacts"> Email: {{ executor.email }} </p>
+        </div>
+        <div class="executor_description">
+            <p class="executor_description"> {{ executor.description }}</p>
+            <p class="executor_description"> {{ executor.rating }} </p>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>List of executors is empty</p>
+{% endif %}
+</body>
+</html>

@@ -21,4 +21,4 @@ class Client(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.pk=}: {self.name=}, {self.date=}, {self.rating=}"
+        return f"{self.pk}: {self.name}, {self.date}, {self.rating}"

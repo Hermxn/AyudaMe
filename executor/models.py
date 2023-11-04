@@ -28,4 +28,4 @@ class Executor(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.pk=}: {self.name=}, {self.ownership=}, {self.area=}, {self.date}, {self.rating=}"
+        return f"{self.pk}: {self.name}, {self.ownership}, {self.area}, {self.date}, {self.rating}"

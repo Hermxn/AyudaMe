@@ -13,4 +13,4 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Client
     template_name = "client/detail.html"
-    context_object_name = "executors"
+    context_object_name = "client"
