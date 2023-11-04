@@ -30,13 +30,19 @@ ALLOWED_HOSTS: list[str] = []
 
 # Application definition
 
-INSTALLED_APPS = [
+BUILT_IN_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+THIRD_PARTY_APPS = [
+    "executor.apps.ExecutorsConfig",
+    "order.apps.OrdersConfig",
+    "client.apps.ClientConfig",
 ]
 
 MIDDLEWARE = [
