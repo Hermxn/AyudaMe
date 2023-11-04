@@ -1,0 +1,15 @@
+.executor {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.executor_contacts {
+    margin: 1px;
+}
+
+.executor_description {
+    margin: 0px;
+}
