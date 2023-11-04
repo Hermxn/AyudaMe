@@ -24,7 +24,11 @@ class Order(models.Model):
         Client, on_delete=models.CASCADE, related_name="client"
     )
     executor: models.ForeignKey = models.ForeignKey(
-        Executor, on_delete=models.CASCADE, related_name="executor"
+        Executor,
+        on_delete=models.CASCADE,
+        related_name="executor",
+        null=True,
+        blank=True,
     )
     objects = models.Manager()
 
