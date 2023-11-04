@@ -40,10 +40,12 @@ BUILT_IN_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "executor.apps.ExecutorsConfig",
-    "order.apps.OrdersConfig",
+    "executor.apps.ExecutorConfig",
+    "order.apps.OrderConfig",
     "client.apps.ClientConfig",
 ]
+
+INSTALLED_APPS = BUILT_IN_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
