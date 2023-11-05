@@ -2,6 +2,8 @@
 *.pre-commit-config.yaml
 *setup.cfg
 *.sqlite3
+variables/venv.py
+docker-compose.yml
 
 /__pycache__/
 .idea/
