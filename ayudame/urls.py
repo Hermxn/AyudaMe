@@ -17,10 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from client import forms as client_forms
+from client import views as client_views
+
 from . import views
 
 urlpatterns = [
     path("", views.start_page),
+    path(
+        "accounts/register/",
+        client_views.CustomRegistrationView.as_view(
+            form_class=client_forms.CustomRegistrationForm
+        ),
+        name="django_registration_register",
+    ),
+    path("accounts/", include("django_registration.backends.activation.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("clients/", include("client.urls")),
     path("executors/", include("executor.urls")),

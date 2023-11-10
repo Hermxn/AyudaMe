@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = [
     "executor.apps.ExecutorConfig",
     "order.apps.OrderConfig",
     "client.apps.ClientConfig",
+    "django_registration",
 ]
 
 INSTALLED_APPS = BUILT_IN_APPS + THIRD_PARTY_APPS
@@ -136,3 +137,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "accounts/login"
+
+LOGIN_REDIRECT_URL = "orders:index"
+
+LOGOUT_REDIRECT_URL = "orders:index"
