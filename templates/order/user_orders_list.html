@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block orders %}
+    {{ client_orders.count }}
+{% endblock %}
+
+{% block offers %}
+    {{ client_offers.count }}
+{% endblock %}
+
+{% block header %}
+    <h1>My orders</h1>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <form class="d-flex mb-2" method="get" action="{% url 'orders:userlist' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="all">
+                <a href="{% url 'orders:userlist' %}?status=all" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    All orders
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'orders:userlist' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="pending">
+                <a href="{% url 'orders:userlist' %}?status=pending" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Pending
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'orders:userlist' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="in_work">
+                <a href="{% url 'orders:userlist' %}?status=in_work" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    In work
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'orders:userlist' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="under_approval">
+                <a href="{% url 'orders:userlist' %}?status=under_approval" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Under approval
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'orders:userlist' %}">
+                {% csrf_token %}
+                <input type="hidden" name="done" value="done">
+                <a href="{% url 'orders:userlist' %}?status=done" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Done
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+        </div>
+    {% endif %}
+    {% if orders %}
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+                {% for order in orders %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-left">
+                                    <h5 class="fw-bolder">
+                                        <a> {{ order.title }} </a>
+                                    </h5><br>
+                                    <p class="order_body mb-0">Published: {{ order.date }}</p>
+                                    <p class="order_body mb-0">Client: {{ order.client }}</p>
+                                    <p class="order_body mb-0">Area: {{ order.area }}</p><br>
+                                    <p class="order_body mb-0">Status: <b>{{ order.status }}</b></p><br>
+                                    <p class="order_body mb-0">{{ order.description }}</p>
+                                </div>
+                            </div>
+                            <!-- Product actions (Dropdown)-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <div class="dropdown d-flex justify-content-center">
+                                        {% if not order.offer %}
+                                            <form class="d-flex mx-2">
+                                                <a href="{% url 'orders:offers' order.id%}" class="btn btn-outline-dark" style="margin-left: 10px;">
+                                                    Offers
+                                                    <span class="badge bg-dark text-white ms-1 rounded-pill"> {{ order.offers.all.count }} </span>
+                                                </a>
+                                            </form>
+                                            <div class="d-flex align-items-center">
+                                                <button class="btn btn-outline-dark mt-auto dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Manage order
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="{% url 'orders:update' order.id %}">Update</a>
+                                                    <a class="dropdown-item" href="{% url 'orders:delete' order.id %}">Delete</a>
+                                                </div>
+                                            </div>
+
+                                        {% elif order.offer and order.status == "In progress" %}
+
+                                            <form class="d-flex mx-2">
+                                                <a href="{% url 'orders:offers' order.id%}" class="btn btn-outline-dark text-center" style="margin-left: 10px;">
+                                                    View executor details
+                                                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                                </a>
+                                            </form>
+
+                                        {% elif order.offer and order.status == "Under approval" and order.offer.status != "Under approval"%}
+                                            <button class="btn btn-outline-dark" disabled>
+                                                <span>Waiting for executors's approval</span>
+                                                <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <br><h2 class="text-center" style="font-size: 16px; opacity: 0.7; line-height: 0.7;">No orders found</h2>
+    {% endif %}
+{% endblock %}

@@ -9,24 +9,20 @@
 {% endblock %}
 
 {% block header %}
-    <h1>Update order</h1>
+    <h1>Make offer</h1>
 {% endblock %}
 
 {% block content %}
-
+    <form method="post" style="max-width: 300px; margin: auto;">
     <form method="post" style="max-width: 300px; margin: auto;">
         {% csrf_token %}
 
-        {{ form.title.label_tag }}<br>
-        {{ form.title }}<br>
+        {{ form.price.label_tag }}<br>
+        {{ form.price }}<br>
 
-        {{ form.description.label_tag }}<br>
-        {{ form.description }}<br>
+        {{ form.comment.label_tag }}<br>
+        {{ form.comment }}<br><br>
 
-        {{ form.area.label_tag }}<br>
-        {{ form.area }}<br><br>
-
-        <input type="submit" value="Update order">
+        <input type="submit" value="Make offer">
     </form>
-
 {% endblock %}

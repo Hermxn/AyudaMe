@@ -2,7 +2,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from client.models import Client
-from executor.models import Executor
 from variables import choices
 
 
@@ -24,13 +23,19 @@ class Order(models.Model):
         Client, on_delete=models.CASCADE, related_name="client"
     )
     executor: models.ForeignKey = models.ForeignKey(
-        Executor,
+        Client,
         on_delete=models.CASCADE,
         related_name="executor",
         null=True,
         blank=True,
     )
+    offer: models.IntegerField = models.IntegerField(null=True, blank=True)
+    status: models.CharField = models.CharField(
+        max_length=15,
+        choices=choices.STATUSES,
+        default="Pending",
+    )
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.pk}, {self.date}, {self.title}, {self.description}, {self.client}, {self.executor}"
+        return f"{self.pk}, {self.date}, {self.title}, {self.description}, {self.client}, {self.executor}, {self.status}"

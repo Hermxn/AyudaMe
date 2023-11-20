@@ -1,19 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-  <form method="post">
+{% extends 'main.html' %}
+
+{% block header %}
+    <h1>Registration Page</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" style="max-width: 300px; margin: auto;">
+    <table>
+        <tr>
+            <td>{{ form.first_name.label_tag }}</td>
+            <td>{{ form.first_name }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.last_name.label_tag }}</td>
+            <td>{{ form.last_name }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.phone.label_tag }}</td>
+            <td>{{ form.phone }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.email.label_tag }}</td>
+            <td>{{ form.email }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password1.label_tag }}</td>
+            <td>{{ form.password1 }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password2.label_tag }}</td>
+            <td>{{ form.password2 }}</td>
+        </tr>
+    </table>
+    <br>
     {% csrf_token %}
-    {% for field in form %}
-        <div class="field">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-        </div>
-    {% endfor %}
-    <button type="submit">Register</button>
+    <div style="text-align: center; margin-top: 10px;">
+        <button type="submit" class="btn btn-outline-dark mx-2">Register</button>
+    </div>
   </form>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>AyudaMe</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'styles.css' %}" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <!-- Header-->
+        <header class="bg-dark py-5" id="bg">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">
+                        {% block header %} <p>Ayudame - Your Platform for Gigs and Services</p> {% endblock %}
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+
+        <section class="py-5">
+            {% block content %}
+    <p class="text-center fw-light">
+        <strong>AyudaMe</strong> is a versatile platform designed to connect individuals seeking small gigs or side jobs
+        with those offering their services. <br>
+        Whether you're in search of a quick task to complete or
+        looking to showcase your skills for potential gigs, <strong>AyudaMe</strong> is your go-to solution.<br><br>
+        Whether you're looking for someone to help with a task or eager to offer your services, <strong>AyudaMe</strong>
+        brings together a diverse community of individuals ready to collaborate and get things done. <br>
+        Join <strong>AyudaMe</strong> today and turn your skills and tasks into opportunities!
+    </p><br>
+
+    <!-- Login and Register Buttons -->
+    <div class="d-flex justify-content-center mb-auto">
+        <a class="btn btn-outline-dark mx-2" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-outline-dark mx-2" href="{% url 'django_registration_register' %}">Register</a>
+    </div>
+            {% endblock %}
+        </section>
+        <!-- Footer-->
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'scripts.js' %}"></script>
+    </body>
+</html>
+

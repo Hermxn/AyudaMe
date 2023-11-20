@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block orders %}
+    {{ client_orders.count }}
+{% endblock %}
+
+{% block offers %}
+    {{ client_offers.count }}
+{% endblock %}
+
+{% block header %}
+    <h1>Offers for order {{ order.title }}</h1>
+{% endblock %}
+
+{% block content %}
+    {% if offer_list %}
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+                {% for offer in offer_list %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product details -->
+                            <div class="card-body p-4">
+                                <div class="text-left">
+                                    {% if order.offer and client.id == order.client_id %}
+                                        <p class="order_body mb-0">Executor: {{ offer.executor }}</p>
+                                        <p class="order_body mb-0">Phone: {{ phone }}</p><br><br>
+                                    {% endif %}
+                                    <p class="order_body mb-0">Price offered: {{ offer.price }}</p>
+                                    <p class="order_body mb-0">{{ offer.comment }}</p>
+                                </div>
+                            </div>
+                            <!-- Product actions -->
+                            {% if client.id == order.client_id and not order.offer %}
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                                    <div class="dropdown d-flex justify-content-center btn-group">
+                                        <form class="d-flex mx-auto" method="post" action="{% url 'orders:offers' order.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                                            <input type="hidden" name="accept" value="accept">
+                                            <button type="submit" class="btn btn-outline-dark rounded mx-auto" style="border-radius: 10px; margin-left: 10px;">
+                                                Accept
+                                                <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                            </button>
+                                        </form>
+                                        <form class="d-flex mx-auto" method="post" action="{% url 'orders:offers' order.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                                            <input type="hidden" name="declined" value="declined">
+                                            <button type="submit" class="btn btn-outline-dark rounded mx-auto" style="border-radius: 10px; margin-left: 10px;">
+                                                Decline
+                                                <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% elif client.id == order.client_id and order.offer %}
+                                <form class="d-flex mx-auto mb-4">
+                                    <button class="btn btn-outline-dark mx-auto" style="margin-left: 10px; margin-bottom: 10px;" disabled>
+                                        <span>Selected offer</span>
+                                        <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if client.id == order.client_id and order.offer %}
+            <h2 class="text-center" style="font-size: 16px; opacity: 0.7; line-height: 0.7;">
+                You are able to contact with the executor now.<br><br>
+                Once the order is closed, confirm it below.
+            </h2>
+            <div class="container mt-5">
+                <form class="d-flex justify-content-center" method="post" action="{% url 'orders:userlist' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+                    <input type="hidden" name="offer_id" value="{{ order.offer }}">
+                    <button type="submit" class="btn btn-outline-dark">
+                        Confirm
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    {% else %}
+        <h2 class="text-center" style="font-size: 16px; opacity: 0.7; line-height: 0.7;">The order does not have offers yet</h2>
+    {% endif %}
+{% endblock %}

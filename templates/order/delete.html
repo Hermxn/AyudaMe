@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h2>Delete Order</h2>
-  <p>Are you sure you want to delete the order "{{ object.title }}"?</p>
+{% block orders %}
+    {{ client_orders.count }}
+{% endblock %}
 
-  <form method="post" action="{% url 'orders:delete' pk=order.pk %}">
-    {% csrf_token %}
-    <div class="text-center">
-      <button type="submit" class="btn btn-outline-dark mt-auto">Confirm</button>
-    </div>
-  </form>
-  <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'orders:userlist' %}">Cancel</a></div>
+{% block offers %}
+    {{ client_offers.count }}
+{% endblock %}
+
+{% block header %}
+    <h1>Delete order</h1>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <p class="text-center">Are you sure you want to delete the order "{{ object.title }}"?</p>
+    <br>
+    <form method="post" action="{% url 'orders:delete' pk=order.pk %}" class="text-center">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-dark mt-auto mr-2">Yes</button>
+      <a class="btn btn-outline-dark mt-auto" href="{% url 'orders:userlist' %}">No</a>
+    </form>
+  </div>
 
 {% endblock %}

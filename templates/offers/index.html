@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block orders %}
+    {{ client_orders.count }}
+{% endblock %}
+
+{% block offers %}
+    {{ client_offers.count }}
+{% endblock %}
+
+{% block header %}
+    <h1>My offers</h1>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <form class="d-flex mb-2" method="get" action="{% url 'offers:index' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="all">
+                <a href="{% url 'offers:index' %}?status=all" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    All offers
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'offers:index' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="pending">
+                <a href="{% url 'offers:index' %}?status=pending" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Pending
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'offers:index' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="in_progress">
+                <a href="{% url 'offers:index' %}?status=in_progress" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    In work
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'offers:index' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="under_approval">
+                <a href="{% url 'offers:index' %}?status=under_approval" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Under approval
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'offers:index' %}">
+                {% csrf_token %}
+                <input type="hidden" name="done" value="done">
+                <a href="{% url 'offers:index' %}?status=done" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Done
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+            <form class="d-flex mb-2" method="get" action="{% url 'offers:index' %}">
+                {% csrf_token %}
+                <input type="hidden" name="declined" value="declined">
+                <a href="{% url 'offers:index' %}?status=declined" class="btn btn-outline-dark rounded" style="border-radius: 10px; margin-left: 10px;">
+                    Declined
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                </a>
+            </form>
+        </div>
+    {% endif %}
+
+    {% if offer_list %}
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+                {% for offer in offer_list %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-left">
+                                    <p class="order_body mb-0">To order: {{ offer.order.title }}</p><br>
+                                    <p class="order_body mb-0">Published: {{ offer.date }}</p>
+                                    <p class="order_body mb-0">Offered: {{ offer.price }}</p>
+                                    <p class="order_body mb-0">Status: <b>{{ offer.status }}</b></p><br>
+                                    <p class="order_body mb-0">Comment: {{ offer.comment }}</p><br>
+                                </div>
+                            </div>
+                            <!-- Product actions (Dropdown)-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <div class="dropdown d-flex justify-content-center">
+                                        {% if offer.status == "In progress" %}
+                                            <form class="d-flex mx-2">
+                                                <a href="{%url 'offers:orders' offer.id%}" class="btn btn-outline-dark" style="margin-left: 10px;">
+                                                    View client details
+                                                    <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                                </a>
+                                            </form>
+                                        {% elif offer.status == "Pending" %}
+                                            <div class="d-flex align-items-center">
+                                                <form class="d-flex mx-2">
+                                                    <a href="{% url 'orders:offers' offer.order.id %}" class="btn btn-outline-dark ml-2">
+                                                        All offers
+                                                        <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                                    </a>
+                                                </form>
+                                            </div>
+                                        {% elif offer.status == "Declined" %}
+                                            <button class="btn btn-outline-dark" disabled>
+                                                <span class="text-danger">Declined</span>
+                                                <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <br><h2 class="text-center" style="font-size: 16px; opacity: 0.7; line-height: 0.7;">No offers found</h2>
+    {% endif %}
+{% endblock %}

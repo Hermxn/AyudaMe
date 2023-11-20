@@ -43,9 +43,9 @@ BUILT_IN_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "executor.apps.ExecutorConfig",
     "order.apps.OrderConfig",
     "client.apps.ClientConfig",
+    "offer.apps.OfferConfig",
     "django_registration",
 ]
 
@@ -142,4 +142,4 @@ LOGIN_URL = "accounts/login"
 
 LOGIN_REDIRECT_URL = "orders:index"
 
-LOGOUT_REDIRECT_URL = "orders:index"
+LOGOUT_REDIRECT_URL = "/"

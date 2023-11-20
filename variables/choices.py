@@ -12,7 +12,18 @@ AREA_CHOICES = (
     ("Transportation", "Transportation"),
 )
 
-OWNERSHIP_CHOICES = (
-    ("Sole proprietor", "Sole proprietor"),
-    ("Legal entity", "Legal entity"),
+STATUSES = (
+    ("Pending", "Pending"),
+    ("In progress", "In progress"),
+    ("Done", "Done"),
+    ("Declined", "Declined"),
+    ("Under approval", "Under approval"),
 )
+
+
+class Statuses:
+    PENDING = STATUSES[0][0]
+    IN_PROGRESS = STATUSES[1][0]
+    DONE = STATUSES[2][0]
+    DECLINED = STATUSES[3][0]
+    UNDER_APPROVAL = STATUSES[4][0]

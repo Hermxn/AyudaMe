@@ -1,10 +1,32 @@
 {% extends 'base.html' %}
 
+{% block orders %}
+    {{ client_orders.count }}
+{% endblock %}
+
+{% block offers %}
+    {{ client_offers.count }}
+{% endblock %}
+
+{% block header %}
+    <h1>Create order</h1>
+{% endblock %}
+
 {% block content %}
+    <form method="post" style="max-width: 300px; margin: auto;">
+        {% csrf_token %}
 
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
+        {{ form.title.label_tag }}<br>
+        {{ form.title }}<br>
 
+        {{ form.description.label_tag }}<br>
+        {{ form.description }}<br>
+
+        {{ form.area.label_tag }}<br>
+        {{ form.area }}<br><br>
+
+        <div style="text-align: center; margin-top: 10px;">
+            <input type="submit" value="Create order" class="btn btn-outline-dark mx-2">
+        </div>
+    </form>
 {% endblock %}
