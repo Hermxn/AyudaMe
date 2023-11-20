@@ -24,10 +24,16 @@ class OrderOfferClientContentMixin:
 
     def get(self, request, *args, **kwargs):
         self._get_client_data(request)
+        response = self._get_client_data(request)
+        if response:
+            return response
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self._get_client_data(request)
+        response = self._get_client_data(request)
+        if response:
+            return response
         return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
